@@ -23,20 +23,17 @@ export default function Home({ data }: HomeProps) {
   //   console.log("clicked id", e.target.id, e.target.offsetParent.id);
   //   fetchTrack(e.target.id);
   // };
-  const [trackId, setTrackId] = useState<number>();
-  function handleClick(e: CustomType) {
-    console.log("clicked id", e.target.id, e.target.offsetParent.id);
+  const [trackId, setTrackId] = useState<number>(0);
+  // function handleClick(e: CustomType) {
+  //   console.log("clicked id", e.target.id, e.target.offsetParent.id);
 
-    const id: number = e.target.id ? e.target.id : e.target.offsetParent.id;
-    // setTrackId(id);
-    fetchTrack(id);
-  }
-  // useEffect(() => {
-  //   fetchTrack(data[0]?.id);
-  // }, []);
-  // useEffect(() => {
-  //   fetchTrack(trackId);
-  // }, [trackId]);
+  //   const id: number = e.target.id ? e.target.id : e.target.offsetParent.id;
+  //   setTrackId(id);
+  //   fetchTrack(id);
+  // }
+  useEffect(() => {
+    fetchTrack(trackId);
+  }, [trackId]);
   async function fetchTrack(id: number) {
     try {
       const res = await fetch(url + id, { headers: headers });
@@ -58,8 +55,7 @@ export default function Home({ data }: HomeProps) {
             style={{ width: "18rem" }}
             className="mx-auto my-2"
             id={entry.id}
-            // onClick={() => setTrackId(entry.id)}
-            onClick={handleClick}
+            onClick={() => setTrackId(entry.id)}
           >
             <Card.Img src={entry.album.cover_medium} />
             <Card.Title>{entry.title_short}</Card.Title>
