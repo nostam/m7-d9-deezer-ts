@@ -13,14 +13,16 @@ export default function Home({ data }: Props) {
   //   setUnique(Array.from(new Set([data?.data])));
   // }, [data]);
   const handleTrack = (e: CustomType) => {
+    console.log(e);
     fetchTrack(e.target.id);
   };
   const fetchTrack = async (id: number) => {
     try {
       const res = await fetch(url + id, { headers: headers });
-      const payload = await res.json();
-      if (!res.ok) throw new Error(payload);
-      console.log(payload);
+      if (res.ok) {
+        const payload = await res.json();
+        console.log(payload);
+      }
     } catch (error) {
       console.log("error", error.message);
     }
