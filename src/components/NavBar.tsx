@@ -2,33 +2,34 @@ import React, { useState } from "react";
 import { Navbar, Form, FormControl, Button } from "react-bootstrap";
 // import { useFetch } from "../libs/hooks";
 import { searchUrl as url, headers } from "../libs/deezer";
+import { SearchResults, Result } from "../types/interfaces";
 interface Props {
-  setData: (data: any) => void;
+  setData: (data: Result[]) => void;
 }
 
 export default function AppNavBar({ setData }: Props) {
   const [searchQuery, setSearchQuery] = useState("");
-  const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
+  function handleSearch(e: React.ChangeEvent<HTMLInputElement>) {
     e.preventDefault();
     setSearchQuery(e.target.value);
-  };
-  const onSubmit = (e: React.SyntheticEvent) => {
+  }
+  function onSubmit(e: React.SyntheticEvent) {
     e.preventDefault();
     fetchDeezer();
-  };
-  const fetchDeezer = async () => {
+  }
+  async function fetchDeezer() {
     try {
       // const { res, err, isLoading } = useFetch(url + searchQuery, headers);
       const res = await fetch(url + searchQuery, { headers: headers });
       if (res.ok) {
-        const data: any = await res.json();
+        const { data } = (await res.json()) as SearchResults;
         setData(data);
         console.log(data);
       }
     } catch (error) {
       console.log("error", error.message);
     }
-  };
+  }
 
   return (
     <Navbar className="bg-light justify-content-between">
