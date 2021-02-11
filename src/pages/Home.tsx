@@ -13,7 +13,6 @@ export default function Home({ data }: Props) {
   //   setUnique(Array.from(new Set([data?.data])));
   // }, [data]);
   const handleTrack = (e: CustomType) => {
-    console.log(e);
     fetchTrack(e.target.id);
   };
   const fetchTrack = async (id: number) => {
