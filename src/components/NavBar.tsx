@@ -1,8 +1,9 @@
 import React, { useState } from "react";
 import { Navbar, Form, FormControl, Button } from "react-bootstrap";
-import { ObjectLiteral } from "../types/ObjectLiteral";
+// import { useFetch } from "../libs/hooks";
+import { searchUrl as url, headers } from "../libs/deezer";
 interface Props {
-  setData: (data: ObjectLiteral) => void;
+  setData: (data: any) => void;
 }
 
 export default function AppNavBar({ setData }: Props) {
@@ -15,16 +16,12 @@ export default function AppNavBar({ setData }: Props) {
     e.preventDefault();
     fetchDeezer();
   };
-  const url = process.env.REACT_APP_DEEZER_SEARCH!;
-  const headers = {
-    "x-rapidapi-key": process.env.REACT_APP_RAPIDAPI_KEY!,
-    "x-rapidapi-host": process.env.REACT_APP_RAPIDAPI_HOST!,
-  };
   const fetchDeezer = async () => {
     try {
+      // const { res, err, isLoading } = useFetch(url + searchQuery, headers);
       const res = await fetch(url + searchQuery, { headers: headers });
       if (res.ok) {
-        const data: ObjectLiteral = await res.json();
+        const data: any = await res.json();
         setData(data);
         console.log(data);
       }
