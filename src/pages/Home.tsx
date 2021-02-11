@@ -12,6 +12,7 @@ export default function Home({ data }: Props) {
   // useEffect(() => {
   //   setUnique(Array.from(new Set([data?.data])));
   // }, [data]);
+  const [track, setTrack] = useState({});
   const handleTrack = (e: CustomType) => {
     fetchTrack(e.target.id);
   };
@@ -21,6 +22,8 @@ export default function Home({ data }: Props) {
       if (res.ok) {
         const payload = await res.json();
         console.log(payload);
+        setTrack(payload);
+        console.log(track);
       }
     } catch (error) {
       console.log("error", error.message);
@@ -35,7 +38,7 @@ export default function Home({ data }: Props) {
             style={{ width: "18rem" }}
             className="mx-auto my-2"
             id={entry.id}
-            onClick={handleTrack}
+            onClick={(e: CustomType) => handleTrack(e)}
           >
             <Card.Img src={entry?.album?.cover_medium} />
             <Card.Title>{entry?.title_short}</Card.Title>
